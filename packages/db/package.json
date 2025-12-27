@@ -1,0 +1,19 @@
+{
+  "name": "@snapsearch/db",
+  "version": "0.0.1",
+  "private": true,
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs --dts",
+    "lint": "echo 'no lint'"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.0",
+    "drizzle-orm": "^0.33.0",
+    "pg": "^8.11.5"
+  },
+  "devDependencies": {
+    "tsup": "^8.0.1"
+  }
+}

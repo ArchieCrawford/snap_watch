@@ -1,0 +1,22 @@
+{
+  "name": "@snapsearch/worker",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsup src/index.ts --format cjs --dts",
+    "start": "node dist/index.js",
+    "seed": "tsx src/seed.ts",
+    "lint": "echo 'no lint'"
+  },
+  "dependencies": {
+    "@farcaster/hub-nodejs": "^0.15.9",
+    "@grpc/grpc-js": "^1.10.10",
+    "@snapsearch/core": "workspace:*",
+    "@snapsearch/db": "workspace:*",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "tsup": "^8.0.1"
+  }
+}

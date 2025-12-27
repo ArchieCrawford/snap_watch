@@ -1,0 +1,24 @@
+{
+  "name": "snapsearch",
+  "private": true,
+  "packageManager": "pnpm@9.12.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "dev:apps": "pnpm -r --parallel --filter ./apps/* dev",
+    "build": "pnpm -r --filter ./apps/* --filter ./packages/* build",
+    "test": "pnpm -r --filter @snapsearch/core test",
+    "lint": "pnpm -r lint",
+    "db:push": "node scripts/db-push.mjs",
+    "seed": "pnpm --filter @snapsearch/worker seed"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.30",
+    "tsx": "^4.7.0",
+    "typescript": "^5.5.4",
+    "vitest": "^1.6.0"
+  }
+}

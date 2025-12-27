@@ -1,0 +1,17 @@
+{
+  "name": "@snapsearch/core",
+  "version": "0.0.1",
+  "private": true,
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs --dts",
+    "test": "vitest run",
+    "dev": "vitest",
+    "lint": "echo 'no lint'"
+  },
+  "devDependencies": {
+    "tsup": "^8.0.1",
+    "vitest": "^1.6.0"
+  }
+}

@@ -1,0 +1,15 @@
+node_modules/
+.next/
+dist/
+
+# Local env files (do not commit secrets)
+.env
+.env.*
+apps/**/.env
+apps/**/.env.*
+
+# Runtime logs
+logs/
+
+# Runtime cursors/state
+apps/**/.data/

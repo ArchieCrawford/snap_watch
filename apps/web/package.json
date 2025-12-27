@@ -1,0 +1,30 @@
+{
+  "name": "@snapsearch/web",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "echo 'no lint'"
+  },
+  "dependencies": {
+    "@farcaster/miniapp-sdk": "^0.2.1",
+    "@snapsearch/core": "workspace:*",
+    "@snapsearch/ui": "workspace:*",
+    "@supabase/supabase-js": "^2.45.0",
+    "clsx": "^2.1.1",
+    "next": "14.2.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.30",
+    "@types/react": "^18.2.79",
+    "@types/react-dom": "^18.2.25",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.4",
+    "typescript": "^5.5.4"
+  }
+}

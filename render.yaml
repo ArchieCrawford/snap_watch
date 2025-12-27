@@ -1,0 +1,49 @@
+services:
+  - type: web
+    name: snapsearch-api
+    runtime: node
+    plan: starter
+    autoDeploy: true
+    buildCommand: pnpm install --frozen-lockfile && pnpm -r --filter ./packages/* build && pnpm --filter @snapsearch/api build
+    startCommand: pnpm --filter @snapsearch/api start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: LOG_LEVEL
+        value: info
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: SUPABASE_DB_URL
+        sync: false
+      - key: API_PORT
+        value: 10000
+
+  - type: worker
+    name: snapsearch-worker
+    runtime: node
+    plan: starter
+    autoDeploy: true
+    buildCommand: pnpm install --frozen-lockfile && pnpm -r --filter ./packages/* build && pnpm --filter @snapsearch/worker build
+    startCommand: pnpm --filter @snapsearch/worker start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: LOG_LEVEL
+        value: info
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: SUPABASE_DB_URL
+        sync: false
+      - key: HUB_RPC_URL
+        value: hub.farcaster.xyz:2283
+      - key: HUB_RPC_INSECURE
+        value: "false"
+      - key: HUB_BACKFILL_DAYS
+        value: "3"
+      - key: INGEST_CURSOR_PATH
+        value: apps/worker/.data/cursor.json

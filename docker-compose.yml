@@ -1,0 +1,15 @@
+version: "3.9"
+services:
+  postgres:
+    image: postgres:15
+    container_name: snapsearch-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: snapsearch
+    ports:
+      - "5432:5432"
+    volumes:
+      - snapsearch_pg_data:/var/lib/postgresql/data
+volumes:
+  snapsearch_pg_data:
