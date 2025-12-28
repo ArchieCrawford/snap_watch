@@ -657,7 +657,7 @@ const aggregateTopFids = (items: Array<{ fid: number; score: number }>) => {
     .slice(0, 10);
 };
 
-const port = Number(process.env.API_PORT || 4000);
+const port = Number(process.env.PORT || process.env.API_PORT || 4000);
 
 const start = async () => {
   try {
