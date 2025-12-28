@@ -34,6 +34,15 @@ const buildExplainFromScore = (score: number) => ({
 server.register(helmet);
 server.register(cors, { origin: true });
 
+server.get("/", async () => {
+  return {
+    name: "snapsearch-api",
+    status: "ok",
+    health: "/health",
+    search: "/search?q=...",
+  };
+});
+
 server.addHook("onRequest", async (request) => {
   log.info("http_request", {
     method: request.method,
@@ -667,6 +676,18 @@ const start = async () => {
     log.error("startup_config_error", {
       error: error instanceof Error ? error.message : String(error),
       hint: "Set DATABASE_URL (local) or SUPABASE_DB_URL (remote) in apps/api/.env",
+    });
+    process.exit(1);
+  }
+
+  try {
+    await pool.query("select 1 as ok");
+    log.info("db_connected", { ok: true });
+  } catch (error) {
+    log.error("db_connect_failed", {
+      error: error instanceof Error ? error.message : String(error),
+      hint:
+        "Check SUPABASE_DB_URL/DATABASE_URL. The host should look like db.<project-ref>.supabase.co (not just .supabase.co).",
     });
     process.exit(1);
   }
