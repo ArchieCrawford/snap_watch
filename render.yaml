@@ -4,7 +4,7 @@ services:
     runtime: node
     plan: starter
     autoDeploy: true
-    buildCommand: pnpm install --frozen-lockfile && pnpm --filter @snapsearch/core build && pnpm --filter @snapsearch/db build && pnpm --filter @snapsearch/api build
+    buildCommand: pnpm install --frozen-lockfile && pnpm --filter @snapsearch/api build
     startCommand: pnpm --filter @snapsearch/api start
     healthCheckPath: /health
     envVars:
@@ -26,7 +26,7 @@ services:
     runtime: node
     plan: starter
     autoDeploy: true
-    buildCommand: pnpm install --frozen-lockfile && pnpm --filter @snapsearch/core build && pnpm --filter @snapsearch/db build && pnpm --filter @snapsearch/worker build
+    buildCommand: pnpm install --frozen-lockfile && pnpm --filter @snapsearch/worker build
     startCommand: pnpm --filter @snapsearch/worker start
     envVars:
       - key: NODE_ENV
