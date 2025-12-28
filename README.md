@@ -93,6 +93,13 @@ Notes:
 - The worker is a continuous process (streams Farcaster hub events). Deploy it as a Render **Background Worker**.
 - Logs are written to stdout and also to `logs/*.log` when a writable filesystem exists.
 
+If you configure services manually (without the Blueprint), use these commands:
+
+- API **Build Command**: `pnpm install --frozen-lockfile && pnpm --filter @snapsearch/core build && pnpm --filter @snapsearch/db build && pnpm --filter @snapsearch/api build`
+- API **Start Command**: `pnpm --filter @snapsearch/api start`
+- Worker **Build Command**: `pnpm install --frozen-lockfile && pnpm --filter @snapsearch/core build && pnpm --filter @snapsearch/db build && pnpm --filter @snapsearch/worker build`
+- Worker **Start Command**: `pnpm --filter @snapsearch/worker start`
+
 ### 3) Vercel (web)
 
 Deploy `apps/web` to Vercel.
