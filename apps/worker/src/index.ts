@@ -32,20 +32,38 @@ const main = async () => {
   let lastEventId = await readCursor(config.cursorPath);
   log("info", "ingest_start", { lastEventId, backfillDays: config.backfillDays });
 
-  await backfillEvents(config, log, async (event) => {
-    await ingestEvent(event, log);
-    lastEventId = event.id;
-    await writeCursor(config.cursorPath, lastEventId);
-  });
+  while (true) {
+    try {
+      await backfillEvents(config, log, async (event) => {
+        await ingestEvent(event, log);
+        lastEventId = event.id;
+        await writeCursor(config.cursorPath, lastEventId);
+      });
+      break;
+    } catch (error) {
+      log("error", "backfill_crash", {
+        error: error instanceof Error ? error.message : String(error),
+        hint: "Check HUB_RPC_URL and set HUB_RPC_INSECURE=true if your hub endpoint is not TLS.",
+      });
+      await new Promise((resolve) => setTimeout(resolve, 10000));
+    }
+  }
 
   while (true) {
     const fromId = lastEventId ? lastEventId + 1 : 0;
     log("info", "stream_start", { fromId });
-    await streamEvents(config, log, fromId, async (event) => {
-      await ingestEvent(event, log);
-      lastEventId = event.id;
-      await writeCursor(config.cursorPath, lastEventId);
-    });
+    try {
+      await streamEvents(config, log, fromId, async (event) => {
+        await ingestEvent(event, log);
+        lastEventId = event.id;
+        await writeCursor(config.cursorPath, lastEventId);
+      });
+    } catch (error) {
+      log("error", "stream_crash", {
+        error: error instanceof Error ? error.message : String(error),
+        hint: "Hub connection dropped or was unreachable; will retry.",
+      });
+    }
     await new Promise((resolve) => setTimeout(resolve, 2000));
   }
 };

@@ -67,8 +67,13 @@ export const createHubClient = (config: IngestConfig) => {
 };
 
 export const waitForHub = async (client: ReturnType<typeof createHubClient>) => {
+  const timeoutMsRaw = process.env.HUB_RPC_CONNECT_TIMEOUT_MS;
+  const timeoutMs = Number.isFinite(Number(timeoutMsRaw))
+    ? Number(timeoutMsRaw)
+    : 20000;
+
   return new Promise<void>((resolve, reject) => {
-    client.$.waitForReady(Date.now() + 5000, (error) => {
+    client.$.waitForReady(Date.now() + timeoutMs, (error) => {
       if (error) {
         reject(error);
       } else {
